@@ -14,25 +14,44 @@ function M:K2_PostLogin(PlayerController)
     local co = coroutine.create(function()
         UE.UKismetSystemLibrary.Delay(self, 2)
         local Player = PlayerController:K2_GetPawn()
-        if Player then
-            --self:GivePlayerAbility(Player)
-        end
+
         self.ArrPlayerState:Add(Player.PlayerState)
-        Player.PlayerState.P_Name = string.format("PLAYER_%d", Player:GetController().PlayerState.PlayerId)
-        Player.PlayerState.P_Index = self.ArrPlayerState:Find(Player.PlayerState)
-        Player.PlayerState:SetPlayerName(Player.PlayerState.P_Index,Player.PlayerState.P_Name)
+        -- 当玩家完全加入进来时
+        if self.ArrPlayerState:Num() == 2 then
+
+            local GS = UE.UGameplayStatics.GetGameState( self)
+            GS:StartCountDown(60)  -- 通知GameState可以开始进行计时
+            
+            local ScoreboxManager = UE.UGameplayStatics.GetActorOfClass(self, UE.UClass.Load('/Game/BluePrints/Scene/ScoreBoxManager.ScoreBoxManager_C'))
+            ScoreboxManager:StartSpawnBox()  -- 通知ScoreBoxManager开始生成初始时的ScoreBox
+            
+            Player:GameStart()
+            -- 循环遍历PlayerState设置玩家名
+            for i = 1, self.ArrPlayerState:Num() do
+                local PS = self.ArrPlayerState:Get(i)
+                if PS then
+                    PS.P_Index = i  
+                    PS.P_Name = string.format("PLAYER_%d", PS.P_Index)  
+                    PS:SetPlayerName(PS.P_Index, PS.P_Name)
+                end
+            end
+        end
     end)
     coroutine.resume(co)
 end
 
 function M:CallSetPlayerScore(PlayerIndex)
-    print(PlayerIndex,"通知，GM收到")
     local PS = self.ArrPlayerState:Get(PlayerIndex)
     local Score = math.random(5, 10)
     PS.P_Score = PS.P_Score + Score
     PS:SetPlayerScore(PlayerIndex, PS.P_Score)
 end
 
+function M:GameStart_RPC()
+    print("111")
+    local PC = UE.UGameplayStatics.GetPlayerController(self, 0)
+    PC:SetInputMode_GameOnly()
+end
 -- function M:Initialize(Initializer)
 -- end
 

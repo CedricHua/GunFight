@@ -10,6 +10,10 @@
 local M = UnLua.Class()
 
 function M:ReceiveBeginPlay()
+    
+end
+
+function M:StartSpawnBox()
     -- 初始时生成三个ScoreBox，后续不再调用
     local i = 0
     local ScoreBoxLocationArray = self.ScoreBoxLocation
@@ -23,7 +27,7 @@ function M:ReceiveBeginPlay()
                 CheckLocationArray:Set(RandIndex,true)
                 i = i + 1
             end
-        end 
+        end
     end
 end
 

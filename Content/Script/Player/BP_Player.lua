@@ -81,9 +81,6 @@ function M:ServerApplyGE_RPC(GEClass,BulletIndex)
 end
 
 
-
-
-
 -- function M:Initialize(Initializer)
 -- end
 
