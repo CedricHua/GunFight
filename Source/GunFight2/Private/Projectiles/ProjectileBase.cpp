@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Projectiles/ProjectileBase.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
-#include "Projectiles/ProjectileBase.h"
 #include "Net/UnrealNetwork.h"
 
 AProjectileBase::AProjectileBase()

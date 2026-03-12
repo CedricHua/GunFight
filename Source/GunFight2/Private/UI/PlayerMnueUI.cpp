@@ -31,11 +31,12 @@ void UPlayerMnueUI::HostButtonClicked()
 
 void UPlayerMnueUI::JoinButtonClicked()
 {
+	const FString Address = TextBox_IpAddress->GetText().ToString();
+	// 加入主房间
+	if (Address.IsEmpty()) return;
+	UGameplayStatics::OpenLevel(this,*Address);
+	
 	FInputModeGameOnly InputMode;
 	GetOwningPlayer()->SetInputMode(InputMode);
 	GetOwningPlayer()->SetShowMouseCursor(false);
-
-	const FString Address = TextBox_IpAddress->GetText().ToString();
-	// 加入主房间
-	UGameplayStatics::OpenLevel(this,*Address);
 }

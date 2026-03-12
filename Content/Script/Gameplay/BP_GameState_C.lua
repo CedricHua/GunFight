@@ -21,11 +21,12 @@ end
 function M:OnTimeCountDown()  -- 每秒调用更新倒计时
     self.RemainingTime = self.RemainingTime - 1
     if self.RemainingTime <= 0 then
-        -- 先清除定时器
-        UE.UKismetSystemLibrary.K2_ClearTimerHandle(self, self.TimerHandle)
-        self.TimerHandle = nil  
+       
         -- 当倒计时结束时发送游戏结束通知
         self:TimeEnd_Server()
+        
+        UE.UKismetSystemLibrary.K2_ClearTimerHandle(self, self.TimerHandle) -- 清除定时器
+        self.TimerHandle = nil
     else
         -- 倒计时未结束时发送时间改变的消息
         self:TimeChange_Server(self.RemainingTime)  
@@ -52,10 +53,10 @@ end
 
 function M:TimerEnd_Multicast_RPC(Winner)
     -- 在所有客户端执行结算逻辑
-    local widget_class = UE.UClass.Load('/Game/BluePrints/UMG/BP_WaitingUI.BP_WaitingUI_C')
+    local widget_class = UE.UClass.Load('/Game/BluePrints/UMG/BP_GameOver.BP_GameOver_C')
     local widget_root = NewObject(widget_class, self)
     widget_root:AddToViewport()
-    widget_root.WinnerName:SetText(Winner)
+    widget_root.Winner:SetText(Winner)
 end
 
 -- function M:ReceiveBeginPlay()

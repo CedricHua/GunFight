@@ -20,7 +20,7 @@ function M:K2_PostLogin(PlayerController)
         if self.ArrPlayerState:Num() == 2 then
 
             local GS = UE.UGameplayStatics.GetGameState( self)
-            GS:StartCountDown(50)  -- 通知GameState可以开始进行计时
+            GS:StartCountDown(3)  -- 通知GameState可以开始进行计时
             
             local ScoreboxManager = UE.UGameplayStatics.GetActorOfClass(self, UE.UClass.Load('/Game/BluePrints/Scene/ScoreBoxManager.ScoreBoxManager_C'))
             ScoreboxManager:StartSpawnBox()  -- 通知ScoreBoxManager开始生成初始时的ScoreBox

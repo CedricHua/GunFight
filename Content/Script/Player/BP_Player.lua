@@ -31,10 +31,10 @@ end
 function M:PlayerDie_Multicast_RPC(Winner)
     print(Winner)
     -- 在所有客户端执行结算逻辑
-    local widget_class = UE.UClass.Load('/Game/BluePrints/UMG/BP_WaitingUI.BP_WaitingUI_C')
+    local widget_class = UE.UClass.Load('/Game/BluePrints/UMG/BP_GameOver.BP_GameOver_C')
     local widget_root = NewObject(widget_class, self)
     widget_root:AddToViewport()
-    widget_root.WinnerName:SetText(Winner)
+    widget_root.Winner:SetText(Winner)
 end
 function M:HPChange_Server_RPC(NewHP)
     self:UpdatePlayerBar(NewHP)  -- 服务器收到消息，向所有客户端广播

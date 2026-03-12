@@ -1,0 +1,1 @@
+E:\Unreal Engine 4\Projetcs\GunFight2\Plugins\UnLuaExtensions\LuaSocket\Intermediate\Build\Win64\UE4Editor\Development\LuaSocket\Definitions.LuaSocket.h
