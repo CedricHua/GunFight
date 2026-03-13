@@ -10,17 +10,17 @@
 local M = UnLua.Class()
 
 function M:K2_PostLogin(PlayerController)
-    print("玩家登录了:", PlayerController:GetName())
-    local co = coroutine.create(function()
-        UE.UKismetSystemLibrary.Delay(self, 2)
-        local Player = PlayerController:K2_GetPawn()
 
+    local co = coroutine.create(function()
+        UE.UKismetSystemLibrary.Delay(self, 0.5)
+        local Player = PlayerController:K2_GetPawn()
+        print("Player加入游戏:",PlayerController:GetName())
         self.ArrPlayerState:Add(Player.PlayerState)
         -- 当玩家完全加入进来时
         if self.ArrPlayerState:Num() == 2 then
 
             local GS = UE.UGameplayStatics.GetGameState( self)
-            GS:StartCountDown(3)  -- 通知GameState可以开始进行计时
+            GS:StartCountDown(30)  -- 通知GameState可以开始进行计时
             
             local ScoreboxManager = UE.UGameplayStatics.GetActorOfClass(self, UE.UClass.Load('/Game/BluePrints/Scene/ScoreBoxManager.ScoreBoxManager_C'))
             ScoreboxManager:StartSpawnBox()  -- 通知ScoreBoxManager开始生成初始时的ScoreBox
@@ -59,6 +59,9 @@ function M:CheckWinner()
 end
 
 function M:CheckWinnerOnDie(PlayerIndex)
+    local GS = UE.UGameplayStatics.GetGameState(self)
+    UE.UKismetSystemLibrary.K2_ClearTimerHandle(GS, GS.TimerHandle) -- 清除定时器
+    GS.TimerHandle = nil
     if PlayerIndex == 1 then
         return string.format("WINNER IS %s", self.ArrPlayerState:Get(2).P_Name)
     else
