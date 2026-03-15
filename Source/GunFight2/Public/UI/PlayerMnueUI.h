@@ -44,5 +44,7 @@ public:
 	UFUNCTION()
 	void JoinButtonClicked();
 
+	UFUNCTION()
+	void SavePlayerNameToCSV(const FString& PLayerName);
 	
 };

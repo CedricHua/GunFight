@@ -26,5 +26,12 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="GameSystem")
 	void CreateSystemTipUI(FString TipText);  // Lua中实现
-	
+
+	UFUNCTION(BlueprintCallable,Category="Player")
+	void GetPlayerNameFromCSV();
+
+	UFUNCTION(BlueprintCallable,Category="Player")
+	void ClearCSV();
+
+
 };

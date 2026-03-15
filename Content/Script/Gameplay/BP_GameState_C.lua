@@ -11,7 +11,7 @@ local M = UnLua.Class()
 
 function M:StartCountDown(Duration)
     if self:HasAuthority() then
-        self.RemainingTime = Duration
+        self.RemainingTime = Duration+1
         print("启动计时器，倒计时：",Duration,"秒")
         -- 设置定时器，用于每秒更新客户端UI的倒计时
         self.TimerHandle = UE.UKismetSystemLibrary.K2_SetTimerDelegate({ self, self.OnTimeCountDown }, 1, true)

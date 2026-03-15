@@ -15,7 +15,8 @@ function M:K2_PostLogin(PlayerController)
         local GameInstance = UE.UGameplayStatics.GetGameInstance(self)
         local Player = PlayerController:K2_GetPawn()
         local PlayerCount = self.ArrPlayerState:Num()
-        
+        -- 调用函数加载玩家名
+        GameInstance:GetPlayerNameFromCSV()
         -- 设置玩家名字
         if PlayerCount == 0 then
             print("Player1_Name:",GameInstance.Player1_Name)
@@ -33,6 +34,7 @@ function M:K2_PostLogin(PlayerController)
                 Player.PlayerState.P_Name = string.format("PLAYER_%d", Player.PlayerState.PlayerId)
             end
         end
+        
         -- 设置完成将其加入到数组
         self.ArrPlayerState:Add(Player.PlayerState)
 
@@ -64,6 +66,9 @@ function M:K2_PostLogin(PlayerController)
             
             -- 通知Player游戏开始，可以移动
             Player:GameStart()
+            
+            -- 删除临时存储玩家名的csv
+            GameInstance:ClearCSV()
         end
     end)
     coroutine.resume(co)
