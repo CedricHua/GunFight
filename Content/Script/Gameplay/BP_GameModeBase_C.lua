@@ -8,33 +8,15 @@
 
 ---@type BP_GameModeBase_C
 local M = UnLua.Class()
-
+local Screen = require("Screen")
 function M:K2_PostLogin(PlayerController)
     local co = coroutine.create(function()
-        UE.UKismetSystemLibrary.Delay(self, 0.5)
+        UE.UKismetSystemLibrary.Delay(self, 1)
         local GameInstance = UE.UGameplayStatics.GetGameInstance(self)
         local Player = PlayerController:K2_GetPawn()
-        local PlayerCount = self.ArrPlayerState:Num()
-        -- 调用函数加载玩家名
-        GameInstance:GetPlayerNameFromCSV()
-        -- 设置玩家名字
-        if PlayerCount == 0 then
-            print("Player1_Name:",GameInstance.Player1_Name)
-            if GameInstance.Player1_Name ~= "Default" then
-                Player.PlayerState.P_Name = GameInstance.Player1_Name
-            else
-                Player.PlayerState.P_Name = string.format("PLAYER_%d", Player.PlayerState.PlayerId)
-            end
-        else
-            print("Player2_Name:",GameInstance.Player2_Name)
-            if GameInstance.Player2_Name ~= "Default" then
-                print("客户端设置玩家名：",GameInstance.Player2_Name)
-                Player.PlayerState.P_Name = GameInstance.Player2_Name
-            else
-                Player.PlayerState.P_Name = string.format("PLAYER_%d", Player.PlayerState.PlayerId)
-            end
-        end
-        
+
+        local msg = string.format("[GameMode]:PlayerName: %s", Player.PlayerState.P_Name)
+        Screen.Print(msg)
         -- 设置完成将其加入到数组
         self.ArrPlayerState:Add(Player.PlayerState)
 
@@ -67,14 +49,14 @@ function M:K2_PostLogin(PlayerController)
             -- 通知Player游戏开始，可以移动
             Player:GameStart()
             
-            -- 删除临时存储玩家名的csv
-            GameInstance:ClearCSV()
         end
     end)
     coroutine.resume(co)
 end
 
-
+function GetNameFromPlayer(PlayerName)
+    return PlayerName
+end
 -- 设置玩家分数
 function M:CallSetPlayerScore(PlayerIndex)
     local PS = self.ArrPlayerState:Get(PlayerIndex)

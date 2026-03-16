@@ -2,6 +2,6 @@
 	"BuildId": "17155196",
 	"Modules": 
 	{
-		"LuaProtobuf": "UE4Editor-LuaProtobuf-0013.dll"
+		"LuaProtobuf": "UE4Editor-LuaProtobuf.dll"
 	}
 }

@@ -35,7 +35,7 @@
 #define WITH_CEF3 1
 #define WITH_LIVE_CODING 1
 #define UE_LIVE_CODING_ENGINE_DIR "E:\\Unreal Engine 4\\UE_4.27\\Engine"
-#define UE_LIVE_CODING_PROJECT "E:\\Unreal Engine 4\\Projetcs\\GunFight2\\GunFight2.uproject"
+#define UE_LIVE_CODING_PROJECT "E:\\Unreal Engine 4\\Projects\\GunFight2\\GunFight2.uproject"
 #define UBT_MODULE_MANIFEST "UE4.modules"
 #define UBT_MODULE_MANIFEST_DEBUGGAME "UE4-Win64-DebugGame.modules"
 #define UBT_COMPILED_PLATFORM Win64

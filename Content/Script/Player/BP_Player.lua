@@ -8,6 +8,29 @@
 
 ---@type BP_Player_C
 local M = UnLua.Class()
+local Screen = require("Screen")
+function M:ReceiveBeginPlay()
+    -- 先锁定玩家控制器
+    local PC = UE.UGameplayStatics.GetPlayerController(self,0)
+    UE.UWidgetBlueprintLibrary.SetInputMode_UIOnlyEx(PC)
+    self:ClientGetPlayerName()
+end
+function M:ClientGetPlayerName_RPC()
+    local GI = UE.UGameplayStatics.GetGameInstance(self)
+    local msg = string.format("当前PlayerName：%s",GI.Player_Name)
+    Screen.Print(msg)
+    self:ServerSetPlayerName(GI.Player_Name)
+end
+
+function M:ServerSetPlayerName_RPC(PlayerName)
+    self.PlayerState.P_Name = PlayerName
+end
+
+function M:GameStart_RPC()
+    -- 解除锁定玩家控制器
+    local PC = UE.UGameplayStatics.GetPlayerController(self,0)
+    UE.UWidgetBlueprintLibrary.SetInputMode_GameOnly(PC)
+end
 
 function M:ReceivePossessed()
     self.HPChangeEvent:Add(self,self.OnHPChanged)  -- 绑定血量变化事件
@@ -104,8 +127,8 @@ end
 -- function M:UserConstructionScript()
 -- end
 
--- function M:ReceiveBeginPlay() 
--- end
+
+
 
 -- function M:ReceiveEndPlay()
 -- end
